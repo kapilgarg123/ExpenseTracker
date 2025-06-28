@@ -35,4 +35,9 @@ public class ExpenseController {
         return expenseService.updateExpense(id, expense);
     }
 
+    @GetMapping("/{id}/expenses")
+    public ExpenseEntity getExpenseById(@PathVariable Long id) {
+        return expenseService.getExpenseById(id);
+    }
+
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -28,9 +30,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-        String token = authService.login(loginDto);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginDto loginDto) {
+        Map<String, String> response = authService.login(loginDto);
+        return ResponseEntity.ok(response);
     }
 
 }

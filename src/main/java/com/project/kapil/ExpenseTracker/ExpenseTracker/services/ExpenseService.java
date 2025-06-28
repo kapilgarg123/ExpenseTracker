@@ -1,6 +1,5 @@
 package com.project.kapil.ExpenseTracker.ExpenseTracker.services;
 
-
 import com.project.kapil.ExpenseTracker.ExpenseTracker.entities.CategoryEntity;
 import com.project.kapil.ExpenseTracker.ExpenseTracker.entities.ExpenseEntity;
 import com.project.kapil.ExpenseTracker.ExpenseTracker.respositories.CategoryRepository;
@@ -22,31 +21,34 @@ public class ExpenseService {
     }
 
     public ExpenseEntity addExpense(ExpenseEntity expense) {
-        CategoryEntity category = expense.getCategory();
-
-        CategoryEntity existingCategory = categoryRepository.findByNameIgnoreCase(category.getName());
-        if (existingCategory == null) {
-            existingCategory = categoryRepository.save(category);
-        }
-        expense.setCategory(existingCategory);
+        expense.setCategory(ensureCategory(expense.getCategory()));
         return expenseRepository.save(expense);
     }
 
-    public boolean isExistsById(Long id) {
-        return expenseRepository.existsById(id);
+    public boolean isNotExistsById(Long id) {
+        return !expenseRepository.existsById(id);
     }
 
     public boolean deleteExpense(Long id) {
-        boolean isExist = isExistsById(id);
-        if (!isExist) return false;
+        if (isNotExistsById(id)) return false;
         expenseRepository.deleteById(id);
         return true;
     }
 
     public ExpenseEntity updateExpense(Long id, ExpenseEntity expense) {
-        boolean isExist = isExistsById(id);
-        if (!isExist) return null;
+        if (isNotExistsById(id)) return null;
         expense.setId(id);
+        expense.setCategory(ensureCategory(expense.getCategory()));
         return expenseRepository.save(expense);
+    }
+
+    private CategoryEntity ensureCategory(CategoryEntity category) {
+        if (category == null || category.getName() == null) return null;
+        CategoryEntity existing = categoryRepository.findByNameIgnoreCase(category.getName());
+        return existing != null ? existing : categoryRepository.save(category);
+    }
+
+    public ExpenseEntity getExpenseById(Long id) {
+        return expenseRepository.findById(id).orElse(null);
     }
 }
