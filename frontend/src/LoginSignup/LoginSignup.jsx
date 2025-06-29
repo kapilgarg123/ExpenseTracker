@@ -23,6 +23,7 @@ export const LoginSignup = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("BASE_URL =>", BASE_URL);
     try {
       if (action === "Login") {
         const res = await axios.post(`${BASE_URL}/auth/login`, {
