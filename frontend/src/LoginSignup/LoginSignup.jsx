@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./LoginSignup.css";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../config";
 
 export const LoginSignup = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const LoginSignup = () => {
   const handleSubmit = async () => {
     try {
       if (action === "Login") {
-        const res = await axios.post("http://localhost:8080/auth/login", {
+        const res = await axios.post(`${BASE_URL}/auth/login`, {
           email: formData.email,
           password: formData.password,
         });
@@ -37,7 +38,7 @@ export const LoginSignup = () => {
           alert("Passwords do not match");
           return;
         }
-        const res = await axios.post("http://localhost:8080/auth/signup", {
+        const res = await axios.post(`${BASE_URL}/auth/signup`, {
           name: formData.name,
           email: formData.email,
           password: formData.password,

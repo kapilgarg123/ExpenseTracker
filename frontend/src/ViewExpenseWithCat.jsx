@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import ExpenseList from "./Components/ExpenseList";
 import AddExpenseForm from "./Components/AddExpenseForm";
 import "./ViewExpenseWithCat.css";
+import { BASE_URL } from "./config";
 
 const ViewCategoryExpensesPage = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const ViewCategoryExpensesPage = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/category/${id}`, {
+        const res = await fetch(`${BASE_URL}/category/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -36,7 +37,7 @@ const ViewCategoryExpensesPage = () => {
     const fetchExpenses = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/category/${id}/expenses`,
+          `${BASE_URL}/category/${id}/expenses`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -65,7 +66,7 @@ const ViewCategoryExpensesPage = () => {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/category/${id}`, {
+      const res = await fetch(`${BASE_URL}/category/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -86,8 +87,8 @@ const ViewCategoryExpensesPage = () => {
     try {
       const method = editingExpense ? "PUT" : "POST";
       const url = editingExpense
-        ? `http://localhost:8080/expense/${editingExpense.id}`
-        : "http://localhost:8080/expense/add";
+        ? `${BASE_URL}/expense/${editingExpense.id}`
+        : `${BASE_URL}/expense/add`;
       const res = await fetch(url, {
         method,
         headers: {
@@ -133,7 +134,7 @@ const ViewCategoryExpensesPage = () => {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/expense/${expenseId}`, {
+      const res = await fetch(`${BASE_URL}/expense/${expenseId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

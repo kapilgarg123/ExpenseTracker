@@ -3,7 +3,7 @@ import AddExpenseForm from "./Components/AddExpenseForm";
 import ExpenseList from "./Components/ExpenseList";
 import "./HomePage.css";
 import { useNavigate } from "react-router-dom";
-import CategoryPage from "./CategoryPage";
+import { BASE_URL } from "./config";
 
 const HomePage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -12,6 +12,7 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [showCategories, setShowCategories] = useState(false);
   const navigate = useNavigate();
+  
 
   const getToken = () => localStorage.getItem("token");
 
@@ -21,7 +22,7 @@ const HomePage = () => {
 
   const fetchExpenses = async () => {
     try {
-      const res = await fetch("http://localhost:8080/expense", {
+      const res = await fetch(`${BASE_URL}/expense`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -39,7 +40,7 @@ const HomePage = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch("http://localhost:8080/category", {
+      const res = await fetch(`${BASE_URL}/category`, {
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -70,7 +71,7 @@ const HomePage = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:8080/expense/add", {
+      const res = await fetch(`${BASE_URL}/expense/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,7 +101,7 @@ const HomePage = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:8080/expense/${expenseId}`, {
+      const res = await fetch(`${BASE_URL}/expense/${expenseId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +133,7 @@ const HomePage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8080/expense/${id}`, {
+      const res = await fetch(`${BASE_URL}/expense/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${getToken()}`,

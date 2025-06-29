@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./CategoryPage.css";
+import { BASE_URL } from "./config";
 
 const AllCategoriesPage = () => {
   const [categories, setCategories] = useState([]);
@@ -11,7 +12,7 @@ const AllCategoriesPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:8080/category", {
+        const res = await fetch(`${BASE_URL}/category`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

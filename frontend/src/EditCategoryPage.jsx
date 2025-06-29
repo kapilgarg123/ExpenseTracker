@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./EditCategoryPage.css";
+import { BASE_URL } from "./config";
 
 const EditCategoryPage = () => {
   const { id } = useParams();
@@ -10,7 +11,7 @@ const EditCategoryPage = () => {
 
   useEffect(() => {
     if (id !== "new") {
-      fetch(`http://localhost:8080/category/${id}`, {
+      fetch(`${BASE_URL}/category/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,8 +31,8 @@ const EditCategoryPage = () => {
 
     const url =
       id === "new"
-        ? "http://localhost:8080/category/add"
-        : `http://localhost:8080/category/${id}`;
+        ? `${BASE_URL}/category/add`
+        : `${BASE_URL}/category/${id}`;
     const method = id === "new" ? "POST" : "PUT";
 
     const res = await fetch(url, {
