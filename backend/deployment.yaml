@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expense-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expense-backend
+  template:
+    metadata:
+      labels:
+        app: expense-backend
+    spec:
+      containers:
+        - name: backend
+          image: 162625029288.dkr.ecr.ap-south-1.amazonaws.com/expense-tracker:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATASOURCE_URL
+              value: jdbc:postgresql://expense-db.cr8wmgcceazp.ap-south-1.rds.amazonaws.com:5432/postgres
+            - name: DATASOURCE_USERNAME
+              value: postgres
+            - name: DATASOURCE_PASSWORD
+              value: Bittugarg
+            - name: FRONTEND_URL
+              value: http://localhost:5173
